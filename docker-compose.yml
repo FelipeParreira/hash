@@ -1,0 +1,51 @@
+version: '3.7'
+services:
+  product_listing:
+    restart: always
+    build:
+      context: ./product_listing
+      target: product-listing-builder
+    container_name: "product_listing"
+    ports:
+    - "3000:3000"
+    volumes:
+    - ./product_listing:/code
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_USER=user
+      - DB_PWD=password
+      - DB_DIALECT=postgres
+      - DB_NAME=database
+      - DISCOUNT_CALCULATOR_HOST=discount_calculator
+      - DISCOUNT_CALCULATOR_PORT=50051
+    depends_on:
+      - db
+  discount_calculator:
+    restart: always
+    build: 
+      context: ./discount_calculator
+      target: discount-calculator-builder
+    container_name: "discount_calculator"
+    volumes:
+    - ./discount_calculator:/code
+    environment:
+      - DB_HOST=db
+      - DB_USER=user
+      - DB_PWD=password
+      - DB_DIALECT=postgres
+      - DB_NAME=database
+      - GRPC_SERVER_PORT=50051
+    depends_on:
+      - db
+  db:
+    restart: always
+    build: ./db
+    container_name: "my_postgres"
+    ports:
+      - "54320:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+      - PGPASSWORD=password
