@@ -22,7 +22,7 @@ app.get("/health_check", (req, res) => {
 });
 
 app.get("/product", async (req, res) => {
-  const page = Number(req.body.page) || 0;
+  const page = Number(req.headers.page) || 0;
   const user_id = req.headers['x-user-id'];
   const products = await queries.getAllProducts(page);
   // TODO how may we cache this value (lastPage)?
@@ -57,5 +57,8 @@ app.get("/product", async (req, res) => {
 
 // server listening
 const PORT = process.env.PORT || 3000;
-// module.exports = app;
-app.listen(PORT, () => console.log(`listening on port ${PORT}...`));
+if(module.parent) {
+  module.exports = app;
+} else {
+  app.listen(PORT, () => console.log(`listening on port ${PORT}...`));
+}
