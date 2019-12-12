@@ -25,7 +25,6 @@ async function getAllProducts(page = 0, limit = pageLimit) {
   } catch (exception) {
     return [];
   }
-  
 }
 
 async function getProductPagesCount(limit = pageLimit) {
