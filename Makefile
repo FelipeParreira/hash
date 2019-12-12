@@ -5,4 +5,5 @@ runservers:
 	$(DOCKER_CMP_COMMAND) up --build
 
 test:
-	$(DOCKER_CMP_COMMAND_EXEC) discount_calculator pytest
+	$(DOCKER_CMP_COMMAND_EXEC) discount_calculator pytest && \
+	$(DOCKER_CMP_COMMAND_EXEC) product_listing npm run test
