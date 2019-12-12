@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_outer_classname = "DiscountCalculatorProto";
+option objc_class_prefix = "DC";
+
+package discountcalculator;
+
+service DiscountCalculator {
+  rpc CalculateDiscount(stream DiscountQuery) returns (stream DiscountResponse) {}
+}
+
+message DiscountQuery {
+  string user_id = 1;
+  string product_id = 2;
+}
+
+message DiscountResponse {
+  float pct = 1;
+  int32 value_in_cents = 2;
+}
+
