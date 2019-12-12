@@ -7,3 +7,9 @@ runservers:
 test:
 	$(DOCKER_CMP_COMMAND_EXEC) discount_calculator pytest && \
 	$(DOCKER_CMP_COMMAND_EXEC) product_listing npm run test
+
+shutdown:
+	$(DOCKER_CMP_COMMAND) down
+
+shutdown-discount:
+	$(DOCKER_CMP_COMMAND) stop discount_calculator
