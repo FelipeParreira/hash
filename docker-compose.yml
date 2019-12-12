@@ -3,13 +3,17 @@ services:
   product_listing:
     restart: always
     build:
-      context: ./product_listing
+      context: .
+      dockerfile: ./product_listing/Dockerfile
       target: product-listing-builder
     container_name: "product_listing"
     ports:
-    - "3000:3000"
+      - "4000:3000"
     volumes:
-    - ./product_listing:/code
+      - ./product_listing/src:/code/src
+      - ./product_listing/test:/code/test
+      - ./product_listing/package.json:/code/package.json
+      - ./product_listing/package-lock.json:/code/package-lock.json
     environment:
       - PORT=3000
       - DB_HOST=db
@@ -24,11 +28,15 @@ services:
   discount_calculator:
     restart: always
     build: 
-      context: ./discount_calculator
+      context: .
+      dockerfile: ./discount_calculator/Dockerfile
       target: discount-calculator-builder
     container_name: "discount_calculator"
     volumes:
-    - ./discount_calculator:/code
+      - ./discount_calculator/src:/code/src
+      - ./discount_calculator/test:/code/test
+      - ./discount_calculator/Pipfile:/code/Pipfile
+      - ./discount_calculator/Pipfile.lock:/code/Pipfile.lock
     environment:
       - DB_HOST=db
       - DB_USER=user
