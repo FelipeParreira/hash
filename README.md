@@ -1,5 +1,6 @@
 # Product Listing & Discount Calculator
-* 2 Microservices that list products and calculate discount for a given combination product/user.
+
+2 microservices that list products and calculate discount for a given combination product/user.
 
 ***
 
