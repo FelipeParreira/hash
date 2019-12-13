@@ -20,9 +20,11 @@ def find_entity_by_id(entity_id: str = "0", table: str = "users") -> dict:
     try:
 
         query = "SELECT * FROM {table} WHERE id = {id}".format(
-          table=sqlescape(str(table)), id=sqlescape(int(entity_id)))
-        result = conn.execute(query)
+          table=sqlescape(str(table)), 
+          id=sqlescape(str(int(entity_id))))
 
+        result = conn.execute(query)
+        
         column_names = result.keys()
         values = result.fetchone()
 
