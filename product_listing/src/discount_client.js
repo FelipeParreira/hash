@@ -1,3 +1,4 @@
+const fs = require('fs');
 const grpc = require('grpc');
 const { logForDevMode } = require('./utils');
 const protoLoader = require('@grpc/proto-loader');
@@ -16,13 +17,16 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH,
 });
 
 const discountCalculator = grpc.loadPackageDefinition(packageDefinition).discountcalculator;
+
+const root_certs = Buffer.from(fs.readFileSync('./server.crt', 'utf8'), 'utf-8');
+const ssl_creds = grpc.credentials.createSsl(root_certs);
 const client = new discountCalculator.DiscountCalculator(
   `${DISCOUNT_CALCULATOR_HOST}:${DISCOUNT_CALCULATOR_PORT}`, 
-  grpc.credentials.createInsecure());
+  ssl_creds);
 
 
 function runCalculateDiscount(callback, products, user_id) {
-  const call = client.calculateDiscount();
+  const call = client.calculateDiscount({}, { deadline: () => new Date(Date.now() + 1) });
   const discounts = [];
 
   call.on('data', function fn(discount) {
