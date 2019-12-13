@@ -22,6 +22,9 @@ RUN pip install pipenv && pipenv install --system --dev
 COPY ./discount_calculator /code/
 COPY ./protos/ /code/
 
+# Copy TLS credentials
+COPY ./server.crt ./server.key /code/
+
 # Generate gRPC files
 RUN python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./discount.proto
 

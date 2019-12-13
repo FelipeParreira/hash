@@ -19,6 +19,9 @@ RUN npm install
 COPY ./product_listing /code/
 COPY ./protos /code/
 
+# Copy TLS certificate
+COPY ./server.crt /code/
+
 # Run starting command
 CMD ["npm", "run", "start-dev"]
 
