@@ -4,14 +4,12 @@
 
 ***
 
-### Run services
-`$ make runservers`
+## [Commands](./Makefile)
 
-### Run tests (unit & integration/E2E)
-`$ make test`
+Command | Description |
+--- | --- 
+`$ make runservers` | Run services
+`$ make test` | Run tests (unit & integration/E2E)
+`$ make shutdown-discount` | Shutdown discount calculator
+`$ make shutdown` | Shutdown all services
 
-### Shutdown discount calculator
-`$ make shutdown-discount`
-
-### Shutdown all services
-`$ make shutdown`
